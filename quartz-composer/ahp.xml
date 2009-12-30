@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<workflows>
+	<workflow>
+		<project>Awesome Project</project>
+		<title>Build 1.X</title>
+		<status>success</status>
+		<stamp>1.0.0 [8]</stamp>
+		<buildlifeid>2437</buildlifeid>
+		<duration>32 s </duration>
+		<changecount>1</changecount>
+	</workflow>
+	<workflow>
+		<project>Lame Project</project>
+		<title>Build 1.X</title>
+		<status>failure</status>
+		<stamp>1.0.0 [18]</stamp>
+		<buildlifeid>3052</buildlifeid>
+		<duration>27 s </duration>
+		<changecount>1</changecount>
+	</workflow>
+</workflows>
