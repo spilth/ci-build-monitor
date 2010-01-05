@@ -10,10 +10,11 @@ XMLElement workflow;
 String workflowTitle;
 String projectTitle;
 String workflowStatus;
+color backgroundColor;
 
 int workflowCount = 0;
 int workflowIndex = 0;
-int msPerWorkflow = 4000;
+int msPerWorkflow = 5000;
 int msSinceLastWorkflow = 0;
 int lastMillis = 0;
 
@@ -101,6 +102,10 @@ void selectPreviousWorkflow() {
 }
 
 void drawStatusBackground(String status) {
-  background(getStatusColor(status));
+  backgroundColor = lerpColor(
+    lerpColor(color(0), getStatusColor(status), .25),
+    getStatusColor(status), (float) msSinceLastWorkflow / msPerWorkflow
+  );
+  background(backgroundColor);
 } 
 
