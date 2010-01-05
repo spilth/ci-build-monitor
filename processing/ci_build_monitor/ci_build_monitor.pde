@@ -3,7 +3,7 @@ final color successColor = color(0,192,0);
 final color failureColor = color(255,0,0);
 final color[] statusColors = {failureColor, successColor};
 
-PFont font;
+PFont font, font2;
 
 XMLElement workflows;
 XMLElement workflow;
@@ -24,8 +24,7 @@ void setup() {
   background(0);
 
   font = loadFont("Helvetica-Bold-48.vlw"); 
-  textAlign(CENTER);
-  textFont(font);
+  font2 = loadFont("Helvetica-Bold-64.vlw");
 
   workflows = new XMLElement(this, workflowFile);
   workflowCount = workflows.getChildCount();
@@ -35,9 +34,8 @@ void draw() {
   msSinceLastWorkflow += millis() - lastMillis;
   lastMillis = millis();
   
-  if (msSinceLastWorkflow >= msPerWorkflow) {
+  if (isPlaying && msSinceLastWorkflow >= msPerWorkflow) {
     selectNextWorkflow();
-    msSinceLastWorkflow = 0;  
   }
   
   workflow = workflows.getChild(workflowIndex);
@@ -48,7 +46,12 @@ void draw() {
   drawStatusBackground(workflowStatus);
   
   fill(255);
-  text(projectTitle, width / 2, height / 2 - 28);
+  
+  textAlign(CENTER);
+  textFont(font2);
+  text(projectTitle, width / 2, height / 2 - 32);
+
+  textFont(font);
   text(workflowTitle, width / 2 , (height / 2) + 28);
 
   drawMonitorState();
@@ -60,7 +63,8 @@ color getStatusColor(String status) {
 
 public void drawMonitorState() {
   if (!isPlaying) {
-    text("Paused", 50, height -50);
+    textAlign(LEFT);
+    text("Paused", 8, height -50);
   }
 }
 
@@ -85,6 +89,7 @@ void selectNextWorkflow() {
   if (workflowIndex >= workflowCount) {
     workflowIndex = 0;
   }
+  msSinceLastWorkflow = 0;
 }
 
 void selectPreviousWorkflow() {
@@ -92,6 +97,7 @@ void selectPreviousWorkflow() {
   if (workflowIndex < 0) {
     workflowIndex = workflowCount - 1;
   }
+  msSinceLastWorkflow = 0;
 }
 
 void drawStatusBackground(String status) {
