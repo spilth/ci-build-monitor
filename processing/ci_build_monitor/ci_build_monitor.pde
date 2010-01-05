@@ -13,8 +13,9 @@ String workflowStatus;
 
 int workflowCount = 0;
 int workflowIndex = 0;
-int msPerWorkflow = 3000;
+int msPerWorkflow = 4000;
 int msSinceLastWorkflow = 0;
+int lastMillis = 0;
 
 void setup() {
   size(screen.width, screen.height);
@@ -29,11 +30,13 @@ void setup() {
 }
 
 void draw() {
+  msSinceLastWorkflow += millis() - lastMillis;
+  lastMillis = millis();
+  
   if (msSinceLastWorkflow >= msPerWorkflow) {
     selectNextWorkflow();
     msSinceLastWorkflow = 0;  
   }
-  msSinceLastWorkflow++;
   
   workflow = workflows.getChild(workflowIndex);
   projectTitle = workflow.getChild(0).getContent();
