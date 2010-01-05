@@ -17,6 +17,8 @@ int msPerWorkflow = 4000;
 int msSinceLastWorkflow = 0;
 int lastMillis = 0;
 
+boolean isPlaying = true;
+
 void setup() {
   size(screen.width, screen.height);
   background(0);
@@ -48,13 +50,25 @@ void draw() {
   fill(255);
   text(projectTitle, width / 2, height / 2 - 28);
   text(workflowTitle, width / 2 , (height / 2) + 28);
+
+  drawMonitorState();
 }
 
 color getStatusColor(String status) {
   return statusColors[int(status.equals("success"))];
 }
 
-void keyPressed() {
+public void drawMonitorState() {
+  if (!isPlaying) {
+    text("Paused", 50, height -50);
+  }
+}
+
+void keyPressed() {  
+  if (key == ' ') {
+    isPlaying = !isPlaying;
+  }
+  
   if (key == CODED) {
     if (keyCode == RIGHT) {
       selectNextWorkflow();
