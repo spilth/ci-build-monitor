@@ -1,4 +1,6 @@
 String workflowUrl = null;
+String urlFile = null;
+final String defaultUrlFile = "url.txt";
 
 final color successColor = color(0,192,0);
 final color failureColor = color(255,0,0);
@@ -25,7 +27,9 @@ int lastMillis = 0;
 boolean isPlaying = true;
 
 void setup() {
+  selectUrlFile();
   loadFeedUrl();
+  
   size(screen.width, screen.height);
   background(0);
 
@@ -35,8 +39,22 @@ void setup() {
   loadFeed();
 }
 
+void selectUrlFile() {
+  BufferedReader reader = createReader(defaultUrlFile);
+  
+  if (reader == null) {
+    urlFile = selectInput();
+
+    if (urlFile == null) {
+      exit();
+    }
+  } else {
+    urlFile = defaultUrlFile; 
+  }
+}
+
 void loadFeedUrl() {
-  BufferedReader reader = createReader("url.txt");
+  BufferedReader reader = createReader(urlFile);
   String line;
 
   try {
