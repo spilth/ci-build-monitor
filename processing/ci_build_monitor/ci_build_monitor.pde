@@ -1,4 +1,5 @@
-final String workflowFile = "ahp.xml";
+//final String workflowFile = "ahp.xml";
+final String workflowFile = "http://localhost/~brian/ahp.xml";
 final color successColor = color(0,192,0);
 final color failureColor = color(255,0,0);
 final color[] statusColors = {failureColor, successColor};
@@ -14,8 +15,11 @@ color backgroundColor;
 
 int workflowCount = 0;
 int workflowIndex = 0;
+
+int msReloadTime = 2 * 60 * 1000;
 int msPerWorkflow = 5000;
 int msSinceLastWorkflow = 0;
+int msSinceLastReload = 0;
 int lastMillis = 0;
 
 boolean isPlaying = true;
@@ -26,14 +30,18 @@ void setup() {
 
   font = loadFont("Helvetica-Bold-48.vlw"); 
   font2 = loadFont("Helvetica-Bold-64.vlw");
-
-  workflows = new XMLElement(this, workflowFile);
-  workflowCount = workflows.getChildCount();
+  
+  loadFeed();
 }
 
 void draw() {
   msSinceLastWorkflow += millis() - lastMillis;
+  msSinceLastReload   += millis() - lastMillis;
   lastMillis = millis();
+
+  if (msSinceLastReload >= msReloadTime) {
+    loadFeed();
+  }
   
   if (isPlaying && msSinceLastWorkflow >= msPerWorkflow) {
     selectNextWorkflow();
@@ -74,6 +82,10 @@ void keyPressed() {
     isPlaying = !isPlaying;
   }
   
+  if (key == 'r') {
+    loadFeed();
+  }
+  
   if (key == CODED) {
     if (keyCode == RIGHT) {
       selectNextWorkflow();
@@ -82,7 +94,14 @@ void keyPressed() {
     if (keyCode == LEFT) {
       selectPreviousWorkflow();
     }
+    
   }
+}
+
+void loadFeed() {
+  workflows = new XMLElement(this, workflowFile);
+  workflowCount = workflows.getChildCount();
+  msSinceLastReload = 0;
 }
 
 void selectNextWorkflow() {
@@ -107,5 +126,5 @@ void drawStatusBackground(String status) {
     getStatusColor(status), (float) msSinceLastWorkflow / msPerWorkflow
   );
   background(backgroundColor);
-} 
+}
 
