@@ -1,5 +1,5 @@
-//final String workflowFile = "ahp.xml";
-final String workflowFile = "http://localhost/~brian/ahp.xml";
+String workflowUrl = null;
+
 final color successColor = color(0,192,0);
 final color failureColor = color(255,0,0);
 final color[] statusColors = {failureColor, successColor};
@@ -25,6 +25,7 @@ int lastMillis = 0;
 boolean isPlaying = true;
 
 void setup() {
+  loadFeedUrl();
   size(screen.width, screen.height);
   background(0);
 
@@ -32,6 +33,27 @@ void setup() {
   font2 = loadFont("Helvetica-Bold-64.vlw");
   
   loadFeed();
+}
+
+void loadFeedUrl() {
+  BufferedReader reader = createReader("url.txt");
+  String line;
+
+  try {
+    line = reader.readLine();
+  } catch (IOException e) {
+
+    e.printStackTrace();
+    line = null;
+  }
+  
+  if (line == null) {
+    println("No URL found in url.txt");
+    exit();
+
+  } else {
+    workflowUrl = line;
+  }
 }
 
 void draw() {
@@ -99,7 +121,7 @@ void keyPressed() {
 }
 
 void loadFeed() {
-  workflows = new XMLElement(this, workflowFile);
+  workflows = new XMLElement(this, workflowUrl);
   workflowCount = workflows.getChildCount();
   msSinceLastReload = 0;
 }
@@ -127,4 +149,5 @@ void drawStatusBackground(String status) {
   );
   background(backgroundColor);
 }
+
 
