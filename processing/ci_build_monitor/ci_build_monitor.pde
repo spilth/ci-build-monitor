@@ -139,7 +139,7 @@ void drawWorkflow() {
 void drawStamp() {
   workflowStamp = workflow.getChild(3).getContent();
 
-  fill(255);
+  fill(255, 75);
   textAlign(CENTER);
   textFont(smallFont);
   text("Stamp: " + workflowStamp, width / 2 , (height / 2) + 60);
@@ -148,7 +148,7 @@ void drawStamp() {
 void drawBuildLife() {
   workflowBuildLife = workflow.getChild(4).getContent();
 
-  fill(255);
+  fill(255, 75);
   textAlign(CENTER);
   textFont(smallFont);
   text("Build Life ID: " + workflowBuildLife, width / 2 , (height / 2) + 100);  
@@ -157,10 +157,10 @@ void drawBuildLife() {
 void drawDuration() {
   workflowDuration = workflow.getChild(5).getContent();
 
-  fill(255);
+  fill(255, 50);
   textAlign(RIGHT);
   textFont(smallFont);
-  text("Duration: " + duration, width - 8 , height - 50);
+  text("Duration: " + workflowDuration, width - 8 , height - 50);
 }
 
 color getStatusColor(String status) {
@@ -170,7 +170,7 @@ color getStatusColor(String status) {
 public void drawMonitorState() {
   if (!isPlaying) {
     textAlign(LEFT);
-    text("Paused", 8, height -50);
+    text("Paused - Showing " + (workflowIndex+1) + " of " + workflowCount, 8, height -50);
   }
 }
 
