@@ -6,13 +6,17 @@ final color successColor = color(0,192,0);
 final color failureColor = color(255,0,0);
 final color[] statusColors = {failureColor, successColor};
 
-PFont font, font2;
+PFont normalFont, bigFont, smallFont;
 
 XMLElement workflows;
 XMLElement workflow;
 String workflowTitle;
 String projectTitle;
 String workflowStatus;
+String workflowStamp;
+String workflowBuildLife;
+String workflowDuration;
+
 color backgroundColor;
 
 int workflowCount = 0;
@@ -33,8 +37,9 @@ void setup() {
   size(screen.width, screen.height);
   background(0);
 
-  font = loadFont("Helvetica-Bold-48.vlw"); 
-  font2 = loadFont("Helvetica-Bold-64.vlw");
+  normalFont = loadFont("Helvetica-Bold-48.vlw");
+  bigFont = loadFont("Helvetica-Bold-64.vlw");
+  smallFont = loadFont("Helvetica-Bold-24.vlw");
   
   loadFeed();
 }
@@ -102,22 +107,60 @@ void draw() {
   }
   
   workflow = workflows.getChild(workflowIndex);
-  projectTitle = workflow.getChild(0).getContent();
-  workflowTitle = workflow.getChild(1).getContent();
-  workflowStatus =  workflow.getChild(2).getContent();
 
-  drawStatusBackground(workflowStatus);
-  
-  fill(255);
-  
-  textAlign(CENTER);
-  textFont(font2);
-  text(projectTitle, width / 2, height / 2 - 32);
-
-  textFont(font);
-  text(workflowTitle, width / 2 , (height / 2) + 28);
+  drawStatusBackground();
+  drawProject();
+  drawWorkflow();
+  drawStamp();
+  drawBuildLife();
+  drawDuration();
 
   drawMonitorState();
+}
+
+void drawProject() {
+  projectTitle = workflow.getChild(0).getContent();
+
+  fill(255);
+  textAlign(CENTER);
+  textFont(bigFont);
+  text(projectTitle, width / 2, height / 2 - 32);
+}
+
+void drawWorkflow() {
+  workflowTitle = workflow.getChild(1).getContent();
+
+  fill(255);
+  textAlign(CENTER);
+  textFont(normalFont);
+  text(workflowTitle, width / 2 , (height / 2) + 28);
+}
+
+void drawStamp() {
+  workflowStamp = workflow.getChild(3).getContent();
+
+  fill(255);
+  textAlign(CENTER);
+  textFont(smallFont);
+  text("Stamp: " + workflowStamp, width / 2 , (height / 2) + 60);
+}
+
+void drawBuildLife() {
+  workflowBuildLife = workflow.getChild(4).getContent();
+
+  fill(255);
+  textAlign(CENTER);
+  textFont(smallFont);
+  text("Build Life ID: " + workflowBuildLife, width / 2 , (height / 2) + 100);  
+}
+
+void drawDuration() {
+  workflowDuration = workflow.getChild(5).getContent();
+
+  fill(255);
+  textAlign(RIGHT);
+  textFont(smallFont);
+  text("Duration: " + duration, width - 8 , height - 50);
 }
 
 color getStatusColor(String status) {
@@ -174,10 +217,12 @@ void selectPreviousWorkflow() {
   msSinceLastWorkflow = 0;
 }
 
-void drawStatusBackground(String status) {
+void drawStatusBackground() {
+  workflowStatus =  workflow.getChild(2).getContent();
+  
   backgroundColor = lerpColor(
-    lerpColor(color(0), getStatusColor(status), .25),
-    getStatusColor(status), (float) msSinceLastWorkflow / msPerWorkflow
+    lerpColor(color(0), getStatusColor(workflowStatus), .25),
+    getStatusColor(workflowStatus), (float) msSinceLastWorkflow / msPerWorkflow
   );
   background(backgroundColor);
 }
