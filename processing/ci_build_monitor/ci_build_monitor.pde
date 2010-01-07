@@ -48,7 +48,7 @@ void selectUrlFile() {
   BufferedReader reader = createReader(defaultUrlFile);
   
   if (reader == null) {
-    urlFile = selectInput();
+    urlFile = selectInput("Select URL file");
 
     if (urlFile == null) {
       exit();
@@ -192,6 +192,16 @@ void keyPressed() {
   
   if (key == 'r') {
     loadFeed();
+    workflowIndex = 0;
+    
+  }
+  
+  if (key == 'u') {
+    noLoop();
+    selectUrlFile();
+    loadFeedUrl();
+    loadFeed();
+    loop();
   }
   
   if (key == CODED) {
@@ -210,6 +220,7 @@ void loadFeed() {
   workflows = new XMLElement(this, workflowUrl);
   workflowCount = workflows.getChildCount();
   msSinceLastReload = 0;
+  msSinceLastWorkflow = 0;
 }
 
 void selectNextWorkflow() {
