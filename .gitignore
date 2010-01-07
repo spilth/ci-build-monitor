@@ -2,3 +2,4 @@
 processing/ci_build_monitor/application.linux/
 processing/ci_build_monitor/application.macosx/
 processing/ci_build_monitor/application.windows/
+processing/ci_build_monitor/url.txt
