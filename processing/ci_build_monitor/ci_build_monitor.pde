@@ -4,9 +4,9 @@ String urlFile = null;
 static String defaultUrlFile = "url.txt";
 static String helpText = "H = Toggle Help\nR = Reload Feed\nU = Choose URL File\nSpace = Pause Monitor\nLeft/Right Arrow = Previous/Next Workflow";
 
-static color successColor = color(0,192,0);
-static color failureColor = color(255,0,0);
-static color[] statusColors = {failureColor, successColor};
+color successColor = color(0,192,0);
+color failureColor = color(255,0,0);
+color[] statusColors = {failureColor, successColor};
 
 PFont normalFont, bigFont, smallFont;
 
