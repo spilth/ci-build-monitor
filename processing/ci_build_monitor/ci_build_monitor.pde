@@ -47,14 +47,28 @@ void selectUrlFile() {
 
     if (urlFile == null) {
       exit();
-    }
-  } else {
-    urlFile = defaultUrlFile; 
+ 
+    } else {
+      copyFeedUrlFile();
+    }  
+  }
+}
+
+void copyFeedUrlFile() {
+  BufferedReader reader2 = createReader(urlFile);
+  PrintWriter writer = createWriter("url.txt");
+
+  try {
+    writer.println(reader2.readLine());
+    writer.flush();
+    writer.close();      
+  } catch (IOException e) {
+    e.printStackTrace();
   }
 }
 
 void loadFeedUrl() {
-  BufferedReader reader = createReader(urlFile);
+  BufferedReader reader = createReader(defaultUrlFile);
   String line;
 
   try {
