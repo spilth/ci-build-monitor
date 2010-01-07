@@ -114,6 +114,7 @@ void draw() {
   drawStamp();
   drawBuildLife();
   drawDuration();
+  drawChangeCount();
 
   drawMonitorState();
 }
@@ -160,8 +161,18 @@ void drawDuration() {
   fill(255, 50);
   textAlign(RIGHT);
   textFont(smallFont);
-  text("Duration: " + workflowDuration, width - 8 , height - 50);
+  text("Build Duration: " + workflowDuration, width - 8 , height - 50);
 }
+
+void drawChangeCount() {
+  workflowDuration = workflow.getChild(6).getContent();
+
+  fill(255, 50);
+  textAlign(CENTER);
+  textFont(smallFont);
+  text("Change Count: " + workflowDuration, width / 2 , height - 50);
+}
+
 
 color getStatusColor(String status) {
   return statusColors[int(status.equals("success"))];
