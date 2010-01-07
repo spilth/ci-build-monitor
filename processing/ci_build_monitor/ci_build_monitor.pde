@@ -1,6 +1,8 @@
 String workflowUrl = null;
 String urlFile = null;
+
 final String defaultUrlFile = "url.txt";
+final String helpText = "H = Toggle Help\nR = Reload Feed\nU = Choose URL File\nSpace = Pause Monitor\nLeft/Right Arrow = Previous/Next Workflow";
 
 final color successColor = color(0,192,0);
 final color failureColor = color(255,0,0);
@@ -29,6 +31,7 @@ int msSinceLastReload = 0;
 int lastMillis = 0;
 
 boolean isPlaying = true;
+boolean isHelping = false;
 
 void setup() {
   selectUrlFile();
@@ -117,6 +120,7 @@ void draw() {
   drawChangeCount();
 
   drawMonitorState();
+  drawHelp();
 }
 
 void drawProject() {
@@ -185,9 +189,21 @@ public void drawMonitorState() {
   }
 }
 
+public void drawHelp() {
+ if (isHelping) {
+   textAlign(LEFT);
+   textFont(smallFont);
+   text(helpText, 8, 30);
+ } 
+}
+
 void keyPressed() {  
   if (key == ' ') {
     isPlaying = !isPlaying;
+  }
+  
+  if (key == 'h') {
+    isHelping = !isHelping;
   }
   
   if (key == 'r') {
