@@ -1,12 +1,12 @@
 String workflowUrl = null;
 String urlFile = null;
 
-final String defaultUrlFile = "url.txt";
-final String helpText = "H = Toggle Help\nR = Reload Feed\nU = Choose URL File\nSpace = Pause Monitor\nLeft/Right Arrow = Previous/Next Workflow";
+static String defaultUrlFile = "url.txt";
+static String helpText = "H = Toggle Help\nR = Reload Feed\nU = Choose URL File\nSpace = Pause Monitor\nLeft/Right Arrow = Previous/Next Workflow";
 
-final color successColor = color(0,192,0);
-final color failureColor = color(255,0,0);
-final color[] statusColors = {failureColor, successColor};
+static color successColor = color(0,192,0);
+static color failureColor = color(255,0,0);
+static color[] statusColors = {failureColor, successColor};
 
 PFont normalFont, bigFont, smallFont;
 
