@@ -48,6 +48,9 @@ public class CIBuildMonitor extends PApplet {
 		selectUrlFile();
 		loadFeedUrl();
 
+		// Hopefully temporary placeholder to make Proclipsing plug-in happy when exporting
+		size(640,480);
+		
 		size(screen.width, screen.height);
 		background(0);
 
